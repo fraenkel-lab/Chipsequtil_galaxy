@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<tool_dependency>
+    <package name="chipsequtil" version="1.0">
+        <install version="1.0">
+            <actions>
+                <action type="download_by_url">https://github.com/adamlabadorf/chipsequtil/archive/master.zip</action>
+                <action type="shell_command">unzip chipsequtil-master.zip -d chipsequtil</action>
+                <action type="shell_command">cd chipsequtil</action>
+                <action type="shell_command">cp org_settings.cfg src/chipsequtil/</action>
+                <action type="shell_command">python setup.py install</action>
+            </actions>
+        </install>
+        <readme></readme>
+    </package>
+</tool_dependency>

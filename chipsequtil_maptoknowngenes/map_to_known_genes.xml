@@ -1,0 +1,46 @@
+<tool id="chipsequtil_maptoknowngenes" name="Map Peaks to Known Genes" version="0.1">
+  <description>
+    Map the peaks in &lt;peaks file&gt; to genes in &lt;knownGene file&gt;.  &lt;knownGene file&gt; isformat is as specified in http://hgdownload.cse.ucsc.edu/goldenPath/hg19/database/knownGene.sql.&lt;peaks file&gt; format is as produced by MACS.  If *auto* is chosen (default) file extension is examined for *.xls* for default MACS format or *.bed* for BED format.  If the --detail option is provided, the following extra fields are appended to each row:
+    peak loc, dist from feature, map type, map subtype
+  </description>
+  <parallelism method="basic"></parallelism>
+  <requirements>
+    <requirement type="package">chipsequtil</requirement>
+  </requirements>
+  <command interpreter="python">
+    map_to_known_genes.py
+      $tss
+      --upstream-window=$upst_win
+      --downstream-window=$dnst_win
+      --map-output=$peaksOutput
+      --peaks-format=$peaks_fmt
+      $detail
+      $intergenic
+      $knownGeneFile $knownGeneRef $macsPeaksFile
+
+  </command>
+  <inputs>
+    <param name="knownGeneFile" type="data" label="knownGene file" help="" optional="false" />
+    <param name="knownGeneRef" type="data" label="knownGene xRef file" help="" optional="false" />
+    <param name="macsPeaksFile" type="data" label="Peaks File" help="" optional="false" />
+    <param name="peaksOutput" type="text" label="Output filename" help="filename to output mapped peaks to" optional="false" />
+
+    <param name="upst_win" type="integer" label="Upstream Window" help="Window width in base pairs to consider promoter region [default: %default]" optional="false" value="5500" />
+    <param name="dnst_win" type="integer" label="Downstream Window" help="Window width in base pairs to consider downstream region [default: %default]" optional="false" value="2500" />
+
+    <param name="tss" checked="true" label="calculate downstream window from transcription start site instead of transcription end site" type="boolean" truevalue="--tss" falsevalue="" help="" />
+
+    <param name="peaks_fmt" type="select" label="Peaks Format" help="Format of peaks input file" optional="false">
+        <option value="auto">auto</option>
+        <option value="MACS">MACS</option>
+        <option selected="true" value="BED">BED</option>
+    </param>
+
+    <param name="detail" checked="false" label="Add extra fields to output" type="boolean" truevalue="--detail" falsevalue="" help="" />
+    <param name="intergenic" checked="false" label="Write intergenic peaks to the gene file as well with None as gene ID" type="boolean" truevalue="--intergenic" falsevalue="" help="" />
+  </inputs>
+  <outputs>
+    <data format="txt" hidden="false" name="default"/>
+  </outputs>
+  <help></help>
+</tool>
