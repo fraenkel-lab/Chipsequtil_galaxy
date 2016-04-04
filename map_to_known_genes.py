@@ -44,14 +44,15 @@ def parse_gene_ref(ref_gene) :
 
     return gene_ref
 
+
 def parse_gene_ref_line(l) :
     l = map(parse_number, l) # coerce to numbers where possible
     l[9] = map(parse_number, l[9].split(',')) # turn 'x,x,x,...' into list
     l[10] = map(parse_number, l[10].split(','))
     return l
 
-if __name__ == '__main__' :
 
+def main():
     opts, args = parser.parse_args(sys.argv[1:])
 
     if len(args) < 3 :
@@ -60,16 +61,6 @@ if __name__ == '__main__' :
     gene_ref = parse_gene_ref(args[0])
     xref_fn = args[1]
     peaks_fn = args[2]
-    if opts.peaks_fmt == 'auto' :
-        path,ext = os.path.splitext(peaks_fn)
-        if ext.lower() == '.xls' :
-            opts.peaks_fmt = 'MACS'
-        elif ext.lower() == '.bed' :
-            opts.peaks_fmt = 'BED'
-        elif ext.lower() == '.narrowpeak' :
-            opts.peaks_fmt = 'BED'
-        else :
-            parser.error('Could not guess peaks file format by extension (%s), aborting'%ext)
 
     if opts.peaks_fmt == 'MACS' :
         peaks_reader_cls = MACSFile
@@ -129,7 +120,7 @@ if __name__ == '__main__' :
         chrom_genes = gene_ref[peak[chr_field]]
 
         if len(chrom_genes) == 0 :
-            sys.stderr.write('WARNING: peak chromosome %s not found in gene reference, skipping: %s\n'%(peak[chr_field],peak))
+            sys.stdout.write('WARNING: peak chromosome %s not found in gene reference, skipping: %s\n'%(peak[chr_field],peak))
             continue
 
         mapped = False
@@ -209,7 +200,6 @@ if __name__ == '__main__' :
                 if opts.symbol_xref :
                     out_d['geneSymbol'] = symbol_xref_map[gene['name']]['geneSymbol']
                 peaks_writer.writerow(out_d)
-
                 mapped = True
 
                 # reset map_type
@@ -223,7 +213,7 @@ if __name__ == '__main__' :
                 peaks_writer.writerow(out_d)
             map_stats['intergenic'] += 1
 
-    if peak_output != sys.stdout :
+    if peak_output != sys.stdout:
         peak_output.close()
 
     #if opts.stats_output != sys.stderr :
@@ -234,3 +224,7 @@ if __name__ == '__main__' :
 
     #if opts.stats_output != sys.stderr :
     #    opts.stats_output.close()
+
+
+if __name__ == '__main__' :
+    main()
