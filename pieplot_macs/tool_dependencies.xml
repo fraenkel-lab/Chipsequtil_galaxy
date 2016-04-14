@@ -1,1 +1,9 @@
-../tool_dependencies.xml
+<?xml version="1.0"?>
+<tool_dependency>
+    <package name="pandas" version="0.14.1">
+        <repository name="package_pandas_0_14" toolshed="https://toolshed.g2.bx.psu.edu/" owner="iuc" />
+    </package>
+    <package name="matplotlib" version="1.4">
+        <repository name="package_python_2_7_matplotlib_1_4" toolshed="https://toolshed.g2.bx.psu.edu/" owner="iuc" />
+    </package>
+</tool_dependency>
