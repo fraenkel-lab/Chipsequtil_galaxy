@@ -1,3 +1,3 @@
-## Chipsequtil for Galaxy
+## Galaxy tools for the Fraenkel Lab's computational pipelines
 
-This repository represents an adaptation of the Chipsequtil "Map Peaks To Known Genes" Tool for Galaxy. 
+This repository primarily represents an adaptation of Chipsequtil tools for Galaxy. 
