@@ -1,0 +1,22 @@
+<tool id="pieplots_macs" name="Pieplots MACS" version="0.1">
+  <description>
+    Peaks are assigned to the closest gene and then categorized according to their location at different genomic regions (promoter, intron, exon, or after the gene). Sites >10kb away from any gene are considered intergenic.
+  </description>
+  <parallelism method="basic"></parallelism>
+  <requirements>
+    <requirement type="package" version="0.14.1">pandas</requirement>
+    <requirement type="package" version="1.4">matplotlib</requirement>
+  </requirements>
+  <command interpreter="python">
+    pieplots_macs.py --genefile $genefile --peakfile $peakfile $MACS --outfile $out
+  </command>
+  <inputs>
+    <param name="genefile" type="data" label="Gene file (map_peaks_to_genes)" help="" optional="false" />
+    <param name="peakfile" type="data" label="Peaks file (narrowpeaks)" help="" optional="false" />
+    <param name="MACS" checked="false" label="Set this value if you have MACS peaks" type="boolean" truevalue="--MACS" falsevalue="" help="" />
+  </inputs>
+  <outputs>
+    <data name="out" format="pdf" hidden="false" />
+  </outputs>
+  <help></help>
+</tool>
