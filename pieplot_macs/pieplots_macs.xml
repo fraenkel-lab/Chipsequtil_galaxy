@@ -4,7 +4,7 @@
   </description>
   <parallelism method="basic"></parallelism>
   <requirements>
-    <requirement type="package" version="0.14.1">pandas</requirement>
+    <requirement type="package" version="0.16">pandas</requirement>
     <requirement type="package" version="1.4">matplotlib</requirement>
   </requirements>
   <command interpreter="python">

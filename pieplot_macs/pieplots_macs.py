@@ -17,20 +17,20 @@ Peaks are assigned to the closest gene and then categorized according to their l
 __author__='Renan Escalante'
 __email__='renanec@mit.edu'
 
-import pandas as pd
+import sys
 import matplotlib
 matplotlib.use('pdf')
 from matplotlib import pyplot as plt
 matplotlib.rcParams['pdf.fonttype']=42
 matplotlib.rcParams['font.size']=14
-import sys
+import pandas as pd
 from argparse import ArgumentParser
 
-def map_peaks(gene,peak,outfile,macsFlag):
+def map_peaks(gene, peak, outfile, macsFlag):
     genefile = open(gene, 'r')
     peakfile = open(peak, 'r')
 
-    types = {'promoter':0, 'after':0, 'intron':0, 'exon': 0}
+    types = {'promoter':0, 'after':0, 'intron':0, 'exon':0}
 
     #read mapped gene file, store closest map for each peak
     peaks={} #{chrom:{peakStart:[dist, type]}}
@@ -40,8 +40,13 @@ def map_peaks(gene,peak,outfile,macsFlag):
         if words[0] == 'knownGeneID': continue
         chrom = words[2]
 
-
-        if not macsFlag:
+        if macsFlag:
+            start = int(words[3])-1
+            dist = abs(int(words[12]))
+            maptype = words[14]
+            if maptype == 'gene':
+                maptype = words[15]
+        else:
             try:
                 start = int(words[3])
                 dist = abs(int(words[15]))
@@ -49,15 +54,8 @@ def map_peaks(gene,peak,outfile,macsFlag):
                 if maptype == 'gene':
                     maptype = words[17]
             except:
+                print 'there probably were not enough columns in the genefile'
                 pass
-
-        else:
-            start = int(words[3])-1
-            dist = abs(int(words[12]))
-            maptype = words[14]
-            if maptype == 'gene':
-                maptype = words[15]
-
 
         if chrom not in peaks:
             #new chrom
@@ -102,13 +100,13 @@ def map_peaks(gene,peak,outfile,macsFlag):
     plt.pie(fracs, labels=labels) #, autopct='%1.1f%%')
 
     #Export data frame with all the counts
-    indexDataFrame = ['exon','intron','promoter','intergenic','after']
-    df = pd.DataFrame(data=fracs, index=indexDataFrame)
-    dfFileName = outfile.replace("pdf","csv")
-    df.to_csv(dfFileName, sep=',')
+    # indexDataFrame = ['exon','intron','promoter','intergenic','after']
+    # df = pd.DataFrame(data=fracs, index=indexDataFrame)
+    # dfFileName = outfile.replace("pdf","csv")
+    # df.to_csv(dfFileName, sep=',')
     #plt.title('MACS peaks in %s'%(name))
     plt.figtext(.5, .1, 'Total: %i'%totalpks, ha='center')
-    fig.savefig(outfile)
+    fig.savefig(outfile, format='pdf')
 
 def main():
     usage = "usage: %prog --genefile MACSoutfile_genes.txt --peakfile MACSoutfile_peaks.bed --outfile MACSdirectory/piechart.pdf"
@@ -116,7 +114,7 @@ def main():
     parser.add_argument("--genefile", dest="genefile", help="Path to file MACS_mfold10,30_pval1e-5_genes.txt")
     parser.add_argument("--peakfile", dest="peakfile", help="Path to file MACS_mfold10,30_pval1e-5_peaks.bed")
     parser.add_argument("--outfile", dest="outfile", default="MACS_piechart.pdf", help="Path to pdf file where you want to store the piechart")
-    parser.add_argument('--MACS',action='store_true',default=False,help='Set this value if you have MACS peaks')
+    parser.add_argument('--MACS', action='store_true', default=False, help='Set this value if you have MACS peaks')
 
     args=parser.parse_args()
 
