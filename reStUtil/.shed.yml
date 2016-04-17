@@ -1,0 +1,9 @@
+categories:
+- Tool Dependency Packages
+description: Contains a tool dependency definition that downloads and installs adamlabadorf/reStUtil.
+long_description: |
+  Python package for generating reStructuredText documents from python programs.
+name: reStUtil
+owner: alenail
+remote_repository_url: https://github.com/fraenkel-lab/galaxytools/tree/master/reStUtil
+type: tool_dependency_definition

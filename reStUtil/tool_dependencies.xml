@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<tool_dependency>
+    <package name="reStUtil" version="1.0">
+        <install version="1.0">
+            <actions>
+                <action type="download_by_url">https://github.com/adamlabadorf/reStUtil/archive/master.zip</action>
+                <action type="shell_command">python setup.py install --install-lib $INSTALL_DIR/lib/python --install-scripts $INSTALL_DIR/bin</action>
+                <action type="set_environment">
+                    <environment_variable name="PATH" action="prepend_to">$INSTALL_DIR/bin</environment_variable>
+                    <environment_variable name="PYTHONPATH" action="prepend_to">$INSTALL_DIR/lib/python</environment_variable>
+                </action>
+            </actions>
+        </install>
+        <readme></readme>
+    </package>
+</tool_dependency>
