@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<tool_dependency>
+    <package name="matplotlib" version="1.4">
+        <repository name="package_python_2_7_matplotlib_1_4" toolshed="https://toolshed.g2.bx.psu.edu/" owner="iuc" />
+    </package>
+<!--     <package name="pandas" version="0.16">
+        <repository name="package_python_2_7_pandas_0_16" owner="iuc" prior_installation_required="True" />
+    </package> -->
+
+    <package name="reStUtil" version="1.0">
+        <repository name="package_reStUtil" toolshed="https://toolshed.g2.bx.psu.edu/" owner="alenail" prior_installation_required="True" />
+    </package>
+    <package name="chipsequtil" version="1.0">
+        <repository name="package_chipsequtil" toolshed="https://toolshed.g2.bx.psu.edu/" owner="alenail" prior_installation_required="True" />
+    </package>
+</tool_dependency>
